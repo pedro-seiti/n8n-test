@@ -25,7 +25,7 @@
     {
       "parameters": {
         "language": "python",
-        "pythonCode": "from decimal import Decimal\n\nvalues = []\naverage = 0\ncount = 0\nfor item in _input.all():\n  values.append(float(item.json.consumption_in_kwh))\n\nn = len(values)\navg = sum(values) / n\n\nsquare_sum = sum((x - avg) ** 2 for x in values)\nstd_deviation = (square_sum / (n - 1)) ** 0.5\n\nlimit = 3\n\nresults = []\nfor item in _input.all():\n  json_res = {}\n  json_res['clientName'] = item.json.name\n  json_res['avgConsumption'] = item.json.consumption_in_kwh\n  kwh = float(item.json.consumption_in_kwh)\n  z = (kwh - avg) / std_deviation\n  if (abs(z) > limit):\n    json_res['consumptionStatus'] = 'outlier'\n  else:\n    json_res['consumptionStatus'] = 'normal'\n\n  results.append(json_res)\n\nreturn results"
+        "pythonCode": "from decimal import Decimal\n\nvalues = []\naverage = 0\ncount = 0\nfor item in _input.all():\n  values.append(float(item.json.consumption_in_kwh))\n\nn = len(values)\navg = sum(values) / n\n\nsquare_sum = sum((x - avg) ** 2 for x in values)\nstd_deviation = (square_sum / (n - 1)) ** 0.5\n\nlimit = 2\n\nresults = []\nfor item in _input.all():\n  json_res = {}\n  json_res['clientName'] = item.json.name\n  json_res['avgConsumption'] = item.json.consumption_in_kwh\n  kwh = float(item.json.consumption_in_kwh)\n  z = (kwh - avg) / std_deviation\n  if (abs(z) > limit):\n    json_res['consumptionStatus'] = 'outlier'\n  else:\n    json_res['consumptionStatus'] = 'normal'\n\n  results.append(json_res)\n\nreturn results"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,

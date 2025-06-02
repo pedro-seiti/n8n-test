@@ -81,7 +81,7 @@ docker compose up -d
 Para a detecção dos outliers foi utilizado o Z-score, uma medida estatística que indica quantos desvios padrão um valor está acima ou abaixo da média.
 
 1. O SQL (`main_workflow.sql`) calcula a média de consumo dos últimos 3 meses por cliente.
-2. Um script Python (`main_workflow.py`) calcula o desvio padrão e classifica o consumo como `normal` ou `outlier` usando um limiar de 3 desvios.
+2. Um script Python (`main_workflow.py`) calcula o desvio padrão e classifica o consumo como `normal` ou `outlier` usando um limiar de 2 desvios.
 
 ## ✅ Exemplo de Saída (JSON)
 
