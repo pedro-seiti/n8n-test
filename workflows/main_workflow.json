@@ -1,0 +1,90 @@
+{
+  "name": "main_workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    c.id AS client_id,\n    c.name,\n    ROUND(AVG(r.kwh_value), 2) AS consumption_in_kwh\nFROM \n    energy.clients c\nINNER JOIN \n    energy.contracts ct ON ct.client_id = c.id\nINNER JOIN \n    energy.readings r ON r.contract_id = ct.id\nWHERE \n    ct.enabled = TRUE\n    AND r.reading_date >= CURRENT_DATE - INTERVAL '3 months'\nGROUP BY \n    c.id, c.name\nORDER BY \n    consumption_in_kwh DESC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "76910c47-3702-4569-a83a-d9d943acc549",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "61hGE66z0xfZjgnB",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "from decimal import Decimal\n\nvalues = []\naverage = 0\ncount = 0\nfor item in _input.all():\n  values.append(float(item.json.consumption_in_kwh))\n\nn = len(values)\navg = sum(values) / n\n\nsquare_sum = sum((x - avg) ** 2 for x in values)\nstd_deviation = (square_sum / (n - 1)) ** 0.5\n\nlimit = 3\n\nresults = []\nfor item in _input.all():\n  json_res = {}\n  json_res['clientName'] = item.json.name\n  json_res['avgConsumption'] = item.json.consumption_in_kwh\n  kwh = float(item.json.consumption_in_kwh)\n  z = (kwh - avg) / std_deviation\n  if (abs(z) > limit):\n    json_res['consumptionStatus'] = 'outlier'\n  else:\n    json_res['consumptionStatus'] = 'normal'\n\n  results.append(json_res)\n\nreturn results"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "7724392e-6fb0-4fdd-8fcf-c2e5440046ca",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "path": "a6017707-a8aa-4c5c-8cc5-d5b6793b1f99",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0ccec95a-dca2-4e6a-84b3-32d9af381340",
+      "name": "Webhook",
+      "webhookId": "a6017707-a8aa-4c5c-8cc5-d5b6793b1f99"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1f65b18a-3feb-494c-a41c-ef2d41d1b5e7",
+  "meta": {
+    "instanceId": "4edb8d4669d8dac623cfebda4180bab86c24393f813884d7a0cef88dbf5b42fe"
+  },
+  "id": "QsArkTNDSVa6SkFN",
+  "tags": []
+}
