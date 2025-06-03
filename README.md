@@ -74,7 +74,7 @@ docker compose up -d
 1. Ainda no ambiente do n8n containerizado, criar outro workflow, importando o arquivo main_workflow.json
 2. Da mesma forma que no step anterior, é possível seja necessário criar as credenciais para conexão no banco de dados. Basta usar as credenciais conforme imagem (a senha é 'postgres')
 ![Conexão com o banco](db_connection.png)
-3. Basta agora executar o workflow através do webhook configurado e receber o resultado no formato json
+3. Basta agora executar o workflow através do webhook configurado e receber o resultado no formato json. Para rodar o processo todo, basta ativar o workflow (caso não esteja ativo), executar o workflow e chamar a URL de teste (presente dentro do step de webhook)
 
 ## 🔎 Lógica de Detecção de Outliers
 
