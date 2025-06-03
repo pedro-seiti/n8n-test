@@ -61,7 +61,7 @@ cd n8n-test
 docker compose up -d
 ```
 
-Antes de executar o comando, vale dar uma olhada sobre na observação sobre os [arquivos CSV](#observacao).
+Antes de executar o comando, vale dar uma olhada sobre na observação sobre os [arquivos CSV](#observação).
 
 ### 3. Executar workflow de inserção de dados
 
