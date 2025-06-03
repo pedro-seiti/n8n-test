@@ -51,7 +51,7 @@ TABLE readings (
 ### 1. Clonar o Repositório
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/pedro-seiti/n8n-test.git
 cd n8n-test
 ```
 
