@@ -61,6 +61,8 @@ cd n8n-test
 docker compose up -d
 ```
 
+Antes de executar o comando, vale dar uma olhada na observação sobre os [arquivos CSV](#observação).
+
 ### 3. Executar workflow de inserção de dados
 
 1. Entrar no ambiente do n8n containerizado através do link http://localhost:5678/
@@ -69,7 +71,9 @@ docker compose up -d
 4. É possível que nos steps de Postgresql, seja necessário criar as credenciais para conexão no banco de dados. Basta usar as credenciais conforme imagem (a senha é 'postgres')
 ![Conexão com o banco](db_connection.png)
 5. Executar workflow para inserir dados presentes nos arquivos csv
-6. **OBSERVAÇÃO:** Os arquivos csv na pasta /inserts do projeto são copiados para o container do n8n e usados pelo workflow de inserção. Caso queira testar o projeto com outros dados, basta substituir os arquivos csv na pasta /inserts do projeto **antes** de rodar o comando ```docker compose up -d```
+
+#### **OBSERVAÇÃO:**
+Os arquivos csv na pasta /inserts do projeto são copiados para o container do n8n e usados pelo workflow de inserção. Caso queira testar o projeto com outros dados, basta substituir os arquivos csv na pasta /inserts do projeto **antes** de rodar o comando ```docker compose up -d```
 
 ### 4. Executar workflow principal
 1. Ainda no ambiente do n8n containerizado, criar outro workflow, importando o arquivo main_workflow.json
