@@ -15,7 +15,7 @@ Este projeto implementa uma solução baseada em workflows (n8n) para monitorame
 
 - **n8n**: Plataforma de automação de workflows.
 - **PostgreSQL**: Banco de dados relacional.
-- **Docker** + **Docker Compose**: Ambiente de contêineres para facilitar a execução local.
+- **Docker** + **Docker Compose**: Ambiente de contêineres para facilitar a execução local. **É necessário ter o Docker instalado para poder executar o projeto.**
 - **Python**: Utilizado no node do n8n para cálculo estatístico.
 - **SQL**: Utilizado para agregações e consulta de consumo.
 
@@ -69,7 +69,7 @@ docker compose up -d
 4. É possível que nos steps de Postgresql, seja necessário criar as credenciais para conexão no banco de dados. Basta usar as credenciais conforme imagem (a senha é 'postgres')
 ![Conexão com o banco](db_connection.png)
 5. Executar workflow para inserir dados presentes nos arquivos csv
-6. **OBSERVAÇÃO:** Os arquivos csv na pasta /inserts do projeto são copiados para o container do n8n e usados pelo workflow de inserção. Caso queira testar projeto com outros dados, basta substituir os arquivos csv na pasta do projeto **antes** de rodar o comando ```docker compose up -d```
+6. **OBSERVAÇÃO:** Os arquivos csv na pasta /inserts do projeto são copiados para o container do n8n e usados pelo workflow de inserção. Caso queira testar o projeto com outros dados, basta substituir os arquivos csv na pasta /inserts do projeto **antes** de rodar o comando ```docker compose up -d```
 
 ### 4. Executar workflow principal
 1. Ainda no ambiente do n8n containerizado, criar outro workflow, importando o arquivo main_workflow.json
